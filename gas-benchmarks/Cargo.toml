@@ -1,0 +1,15 @@
+[package]
+name = "gas-benchmarks"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+thiserror = "2.0"
+base64 = "0.21"
+hmac = "0.12"
+sha2 = "0.10"
+reqwest = { version = "0.11", features = ["json"] }
+tokio = { version = "1.0", features = ["full"] }
+serde_json = "1.0"
+hex = "0.4"
+serde = { version = "1.0", features = ["derive"] }

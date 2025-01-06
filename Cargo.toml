@@ -1,0 +1,5 @@
+[workspace]
+members = ["gas-benchmarks"]
+resolver = "2"
+
+default-members = ["gas-benchmarks"]
