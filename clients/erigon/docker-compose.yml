@@ -1,0 +1,30 @@
+services:
+  erigon-init:
+    container_name: erigon-init
+    image: ethereum/client-go:latest
+    volumes:
+      - ./data:/data
+      - ./jwt.hex:/config/jwt.hex
+      - ./genesis.json:/genesis.json
+    entrypoint: erigon init --datadir=/data /genesis.json
+
+  erigon:
+    container_name: erigon-node
+    depends_on:
+      erigon-init:
+        condition: service_completed_successfully
+    image: ethereum/client-go:latest
+    ports:
+      - "8551:8551"
+    volumes:
+      - ./data:/data
+      - ./jwt.hex:/config/jwt.hex
+    command:
+      - --syncmode=full
+      - --nodiscover
+      - --datadir=/data
+      - --networkid=1700
+      - --authrpc.addr=0.0.0.0
+      - --authrpc.port=8551
+      - --authrpc.vhosts=*
+      - --authrpc.jwtsecret=/config/jwt.hex
