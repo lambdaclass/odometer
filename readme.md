@@ -6,7 +6,8 @@ Docker required.
 
 ## Usage
 
-Type `cargo run` to run the binary.
+- Start up docker cli
+- Type `cargo run` to run the binary.
 
 ## License
 
