@@ -16,7 +16,7 @@ async fn main() {
 
     let mut summaries = Vec::new();
 
-    for request in fs::read_to_string("requests.txt").unwrap().lines() {
+    for request in fs::read_to_string("tests/requests.txt").unwrap().lines() {
         let parsed: engine_api::EngineApiRequest = serde_json::from_str(request).unwrap();
         match client.send_request(&parsed).await {
             Ok(summary) => summaries.push(summary),
