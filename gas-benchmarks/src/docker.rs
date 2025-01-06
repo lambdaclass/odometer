@@ -9,6 +9,8 @@ pub enum DockerError {
     ExecutionFailed(#[from] std::io::Error),
 }
 
+// DockerCompose represents context needed to call
+// the `docker compose` with.
 pub struct DockerCompose {
     project_dir: String,
     project_name: String,
@@ -22,6 +24,7 @@ impl DockerCompose {
         }
     }
 
+    // up calls `docker compose up`
     pub fn up(&self) -> Result<(), DockerError> {
         // Execute the docker-compose command and capture the output
         let output = Command::new("docker-compose")
@@ -29,7 +32,7 @@ impl DockerCompose {
             .arg("-p")
             .arg(&self.project_name)
             .args(["up", "-d", "--wait"])
-            .output()?; // This captures stdout and stderr
+            .output()?;
 
         // Check if the command was successful
         if !output.status.success() {
@@ -58,6 +61,7 @@ impl DockerCompose {
         Ok(())
     }
 
+    // `down` calls `docker compose down`
     pub fn down(&self) -> Result<(), DockerError> {
         let status = Command::new("docker-compose")
             .current_dir(&self.project_dir)

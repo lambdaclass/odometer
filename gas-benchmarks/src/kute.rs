@@ -1,4 +1,3 @@
-// lib.rs
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine};
 use hmac::{Hmac, Mac};
 use reqwest::Client;
