@@ -32,7 +32,7 @@ pub struct SequenceItem {
 #[derive(Debug)]
 pub struct BenchEngineAPIRequestSummary {
     pub description: String,
-    pub time_taken_milliseconds: u128,
-    pub gas_used: Option<String>,
+    pub time_taken_microseconds: u128,
+    pub gas_used: String,
     pub response: EngineApiResponse,
 }

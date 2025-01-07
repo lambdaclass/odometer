@@ -76,7 +76,7 @@ impl JwtClient {
             .body(request_string)
             .send()
             .await?;
-        let duration = start.elapsed().as_millis();
+        let duration = start.elapsed().as_micros();
 
         let response_text = response.text().await?;
         let parsed_response: EngineApiResponse =
@@ -88,7 +88,7 @@ impl JwtClient {
             })?;
 
         let summary = TimedEngineApiResponse {
-            time_taken_milliseconds: duration,
+            time_taken_microseconds: duration,
             response: parsed_response,
         };
 

@@ -109,7 +109,7 @@ pub struct EngineApiResponse {
 }
 
 pub struct TimedEngineApiResponse {
-    pub time_taken_milliseconds: u128,
+    pub time_taken_microseconds: u128,
     pub response: EngineApiResponse,
 }
 
