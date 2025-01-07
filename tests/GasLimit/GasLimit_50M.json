@@ -1,5 +1,5 @@
 {
-  "name": "gas_limit_50M",
+  "name": "Gas Limit - 50M",
   "description": "Calls a block which uses 50M Gas",
   "sequence": [
     {
