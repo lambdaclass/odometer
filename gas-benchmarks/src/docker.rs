@@ -27,9 +27,9 @@ impl DockerCompose {
     // up calls `docker compose up`
     pub fn up(&self) -> Result<(), DockerError> {
         // Execute the docker-compose command and capture the output
-        let output = Command::new("docker-compose")
+        let output = Command::new("docker")
             .current_dir(&self.project_dir)
-            .arg("-p")
+            .args(["compose","-p"])
             .arg(&self.project_name)
             .args(["up", "-d", "--wait"])
             .output()?;
@@ -63,9 +63,9 @@ impl DockerCompose {
 
     // `down` calls `docker compose down`
     pub fn down(&self) -> Result<(), DockerError> {
-        let status = Command::new("docker-compose")
+        let status = Command::new("docker")
             .current_dir(&self.project_dir)
-            .arg("-p")
+            .args(["compose","-p"])
             .arg(&self.project_name)
             .arg("down")
             .status()?;
