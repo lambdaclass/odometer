@@ -23,7 +23,7 @@ process_file() {
     # Create JSON structure
     cat > "$output_file" << EOF
 {
-    "name": "gas_limit_${gas_limit}M",
+    "name": "Gas Limit - ${gas_limit}M",
     "description": "Calls a block which uses ${gas_limit}M Gas",
     "sequence": [
 EOF
