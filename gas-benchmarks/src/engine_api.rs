@@ -62,12 +62,6 @@ pub enum EngineApiRequest {
     },
 }
 
-#[derive(Debug)]
-pub enum RequestType {
-    ForkChoiceUpdated,
-    NewPayload,
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PayloadStatus {
@@ -114,6 +108,11 @@ pub struct EngineApiResponse {
     pub result: ResultType,
 }
 
+pub struct TimedEngineApiResponse {
+    pub time_taken_milliseconds: u128,
+    pub response: EngineApiResponse,
+}
+
 impl EngineApiRequest {
     pub fn gas_used(&self) -> Option<String> {
         if let EngineApiRequest::NewPayloadV3 {
@@ -125,12 +124,5 @@ impl EngineApiRequest {
             return params.0.gas_used.clone();
         }
         return None;
-    }
-
-    pub fn request_type(&self) -> RequestType {
-        match self {
-            EngineApiRequest::NewPayloadV3 { .. } => RequestType::NewPayload,
-            EngineApiRequest::ForkchoiceUpdatedV3 { .. } => RequestType::ForkChoiceUpdated,
-        }
     }
 }

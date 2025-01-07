@@ -7,8 +7,8 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use thiserror::Error;
 
 use crate::{
-    bench_summary::BenchSummary,
-    engine_api::{EngineApiRequest, EngineApiResponse, ResultType},
+    bench_summary::BenchEngineAPIRequestSummary,
+    engine_api::{EngineApiRequest, EngineApiResponse, TimedEngineApiResponse},
 };
 
 type HmacSha256 = Hmac<Sha256>;
@@ -60,7 +60,10 @@ impl JwtClient {
         Ok(format!("{}.{}.{}", header_b64, payload_b64, signature))
     }
 
-    pub async fn send_request(&self, request: &EngineApiRequest) -> Result<BenchSummary, JwtError> {
+    pub async fn send_request(
+        &self,
+        request: &EngineApiRequest,
+    ) -> Result<TimedEngineApiResponse, JwtError> {
         let jwt = self.create_jwt().await?;
         let request_string = serde_json::to_string_pretty(&request).unwrap();
 
@@ -84,11 +87,8 @@ impl JwtClient {
                 }
             })?;
 
-        let summary = BenchSummary {
-            name: "test_name".into(),
-            time_taken_millisecond: duration,
-            gas_used: request.gas_used(),
-            request_type: request.request_type(),
+        let summary = TimedEngineApiResponse {
+            time_taken_milliseconds: duration,
             response: parsed_response,
         };
 

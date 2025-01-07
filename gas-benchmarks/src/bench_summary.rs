@@ -1,24 +1,38 @@
-use crate::engine_api::{EngineApiRequest, EngineApiResponse, RequestType};
+use serde::{Deserialize, Serialize};
 
+use crate::engine_api::{EngineApiRequest, EngineApiResponse};
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct BenchInput {
     // name of the benchmark
-    name: String,
-    // TODO: Hmm we can probably just get this from the engine API
-    // TODO request itself
-    gas_used: String,
+    pub name: String,
+    // description of the benchmark
+    pub description: String,
+    // Sequence of engine api calls needed to
+    //  execute the benchmark.
+    //
+    // Example, to make a 30M block, we first deploy a contract, then call that contract and consume
+    // 30M Gas. Only the contract call is benchmarked, but we still need to engine api calls to
+    // deploy the contract and fork choice update.
+    pub sequence: Vec<SequenceItem>,
+}
+#[derive(Debug, Serialize, Deserialize)]
+
+pub struct SequenceItem {
+    pub description: String,
+    // expect_measurement specifies whether
+    // we should keep the measurement for this
+    // engine api request.
+    pub expect_measurement: bool,
     // Raw engine API request that the CL
     // would send to the EL
-    engine_api_requests: EngineApiRequest,
+    pub request: EngineApiRequest,
 }
 
 #[derive(Debug)]
-pub struct BenchSummary {
-    pub name: String,
-    pub time_taken_millisecond: u128,
+pub struct BenchEngineAPIRequestSummary {
+    pub description: String,
+    pub time_taken_milliseconds: u128,
     pub gas_used: Option<String>,
-    // TODO: This is somewhat redundant, since the ResultType
-    // TODO: in response also tells you whether it was
-    // TODO: a newPayload request or a forkChoiceUpdate
-    pub request_type: RequestType,
     pub response: EngineApiResponse,
 }
