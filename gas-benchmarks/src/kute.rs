@@ -30,13 +30,16 @@ pub enum JwtError {
 pub struct JwtClient {
     client: Client,
     secret: Vec<u8>,
+    rpc_url: String,
 }
 
 impl JwtClient {
-    pub fn new(secret: Vec<u8>) -> Self {
+    pub fn new(secret: Vec<u8>, rpc_url: String) -> Self {
+
         Self {
             client: Client::new(),
             secret,
+            rpc_url,
         }
     }
 
@@ -70,7 +73,7 @@ impl JwtClient {
         let start = std::time::Instant::now();
         let response = self
             .client
-            .post("http://localhost:8551") // TODO: add url as a parameter on self
+            .post(&self.rpc_url) 
             .header("Content-Type", "application/json")
             .header("Authorization", format!("Bearer {}", jwt))
             .body(request_string)
