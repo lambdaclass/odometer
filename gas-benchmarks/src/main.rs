@@ -15,7 +15,7 @@ async fn main() {
 
     // Setup Engine API credentials
     let secret = hex::decode(fs::read_to_string("jwt.hex").unwrap().trim()).unwrap();
-    let client = JwtClient::new(secret);
+    let client = JwtClient::new(secret, "http://localhost:8551".to_string());
 
     let mut summaries = Vec::new();
 
