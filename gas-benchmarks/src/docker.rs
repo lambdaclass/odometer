@@ -24,6 +24,13 @@ impl DockerCompose {
         }
     }
 
+    // Cleanup any state that may have been left behind.
+    pub fn cleanup(&self) -> Result<(), DockerError> {
+        let data_folder = format!("{}/data", self.project_dir);
+        std::fs::remove_dir_all(&data_folder).map_err(|e| DockerError::ExecutionFailed(e))?;
+        Ok(())
+    }
+
     // up calls `docker compose up`
     pub fn up(&self) -> Result<(), DockerError> {
         // Execute the docker-compose command and capture the output
@@ -75,6 +82,8 @@ impl DockerCompose {
                 "docker-compose down failed".into(),
             ));
         }
+
+        self.remove_data_folder()?;
         Ok(())
     }
 }
