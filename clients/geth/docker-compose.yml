@@ -1,30 +1,11 @@
 services:
-  geth-init:
-    container_name: geth-init
-    image: ethereum/client-go:latest
-    volumes:
-      - ./data:/data
-      - ./jwt.hex:/config/jwt.hex
-      - ./genesis.json:/genesis.json
-    entrypoint: geth init --datadir=/data /genesis.json
-
   geth:
-    container_name: geth-node
-    depends_on:
-      geth-init:
-        condition: service_completed_successfully
+    container_name: geth_node
     image: ethereum/client-go:latest
     ports:
       - "8551:8551"
     volumes:
-      - ./data:/data
+      - ./entrypoint.sh:/entrypoint.sh
       - ./jwt.hex:/config/jwt.hex
-    command:
-      - --syncmode=full
-      - --nodiscover
-      - --datadir=/data
-      - --networkid=1700
-      - --authrpc.addr=0.0.0.0
-      - --authrpc.port=8551
-      - --authrpc.vhosts=*
-      - --authrpc.jwtsecret=/config/jwt.hex
+      - ./genesis.json:/genesis.json
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
