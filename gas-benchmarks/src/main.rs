@@ -26,6 +26,9 @@ async fn main() {
         let dc = docker::DockerCompose::new("clients/geth", "test");
         dc.up().unwrap();
 
+        //TODO: Add a healtcheck instead of a manual delay.
+        tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+
         let summary = benchmark_engine_api_request(&client, &bench_input).await;
 
         // For each summary, we have a table column
