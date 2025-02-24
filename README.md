@@ -1,6 +1,14 @@
-# Odometer
+<!-- markdownlint-disable MD033 MD041 -->
 
-A tool for benchmarking Ethereum clients.
+<p align="center">
+  <img src="assets/odometer.png" alt="Odometer" width="250"/>
+</p>
+<p align="center">
+  <h1 align="center">Odometer</h1>
+</p>
+<p align="center">
+    A tool for benchmarking Ethereum clients.
+</p>
 
 ## Prerequisites
 
