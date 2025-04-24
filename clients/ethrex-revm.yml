@@ -1,0 +1,21 @@
+services:
+  node:
+    # TODO: have a place like the hub where it can download it from
+    image: ethrex:latest
+
+    environment:
+      RUN_COMMAND: |
+        ethrex \
+          --http.addr 0.0.0.0 \
+          --http.port 8545 \
+          --network /config/genesis.json \
+          --authrpc.port 8551 \
+          --authrpc.addr 0.0.0.0 \
+          --evm revm \
+          --datadir memory \
+          --authrpc.jwtsecret /config/jwt.hex
+
+    extends:
+      file: ../config/docker/common.yml
+      service: base_client
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
