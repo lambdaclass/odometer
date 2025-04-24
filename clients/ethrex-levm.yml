@@ -1,7 +1,6 @@
 services:
   node:
-    # TODO: have a place like the hub where it can download it from
-    image: ethrex:latest
+    image: ghcr.io/lambdaclass/ethrex:latest
 
     environment:
       RUN_COMMAND: |
