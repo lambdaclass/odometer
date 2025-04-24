@@ -16,7 +16,8 @@
     "terminalTotalDifficultyPassed": true,
     "shanghaiTime": 0,
     "cancunTime": 0,
-    "ethash": {}
+    "ethash": {},
+    "depositContractAddress": "0x4242424242424242424242424242424242424242"
   },
   "alloc": {
     "0x0000000000000000000000000000000000000000": {
