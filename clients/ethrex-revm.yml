@@ -12,7 +12,7 @@ services:
           --authrpc.port 8551 \
           --authrpc.addr 0.0.0.0 \
           --evm revm \
-          --datadir memory \
+          --datadir /data \
           --authrpc.jwtsecret /config/jwt.hex
 
     extends:
